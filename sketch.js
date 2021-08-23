@@ -1,4 +1,4 @@
-const seed = 253;
+let seed = parseInt(document.location.hash.substr(1), 10) || 253;
 
 let palette;
 let g;
@@ -6,6 +6,7 @@ let current = seed;
 let texture;
 let f = 0;
 let bg;
+let drawBg = false;
 
 function setup() {
   createCanvas(1600, 1600);
@@ -78,10 +79,6 @@ function draw() {
   palette.shift();
 
   shuffleRnd(palette);
-  palette.forEach((p, i) => {
-    // palette[i] = lerpColor(palette[i], bg, (f % 60) / 60);
-  });
-  console.log(f, palette[0]);
 
   push();
   fill(c);
@@ -96,7 +93,11 @@ function draw() {
 
   g = get();
   bg = random(palette);
-  // background(bg);
+  if (drawBg) {
+    background(bg);
+  } else {
+    clear();
+  }
 
   let area = detectEdge(g);
   rectMode(CORNERS);
@@ -117,8 +118,8 @@ function draw() {
   pop();
   // image(texture, 0, 0);
 
-  frameRate(10);
-  // noLoop();
+  // frameRate(10);
+  noLoop();
 }
 
 function detectCenter(area) {

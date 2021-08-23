@@ -5,15 +5,17 @@ body {
 }
 canvas {
   display: block;
-  max-width: 1600px !important;
+  max-height: 60vh;
   width: 100% !important;
-  height: 100% !important;
+  object-fit: contain;
 }
 
 /*//*/
 
 body {
-  background: rgb(199, 36, 38);
+  background: #aaa;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 20px;
 }
 .p5Canvas {
   margin: auto;

@@ -1,11 +1,20 @@
 <!DOCTYPE html><html lang="en"><head>
-    <script src="p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
 
   </head>
   <body>
+<h1>mask modder</h1>
+<p>make memes and put your mask on other photos. find a version of your mask you like and right-click, save-as. your NFT is your proof of ownership, this is just a tool to help you get more value from your mask. please only use this with your own mask.</p>
+<label>mask number <input type="number" value="253" id="maskNum" onchange="changeMask();"></label><br/>
+<label>transparent bg? <input type="checkbox" checked id="bg" onchange="shuffleColors();"/></label><br/>
+<button onclick="changePalette();">change palette</button>
+<button onclick="shuffleColors();">shuffle colors</button>
+
     <script src="sketch.js"></script>
   <script src="modified.js"></script>
 
+  <p>made with &hearts; by <a href="https://twitter.com/junosz">junosz.eth</a>. come say hi on the <a href="https://discord.gg/fH9F7p2CpW">discord</a>.</p>
 </body></html>
+
