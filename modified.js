@@ -7,7 +7,7 @@ $maskNum.value = seed;
 $opensea.href =
   "https://opensea.io/assets/generativemasks?search[query]=%22%23" +
   seed +
-  "%20%22&search[sortAscending]=true&search[sortBy]=CREATED_DATE";
+  "%20%22&search[sortAscending]=true&search[sortBy]=CREATED_DATE&search[resultModel]=ASSETS";
 
 function updateFormVars() {
   drawBg = !$bg.checked;

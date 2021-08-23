@@ -1,5 +1,11 @@
 let seed = parseInt(document.location.hash.substr(1), 10) || 253;
 
+if (Number.isNaN(seed) || seed < 0 || seed > 9999) {
+  alert("mask number must be between 0 and 9999");
+  setup = function () {};
+  draw = function () {};
+}
+
 let palette;
 let g;
 let current = seed;
