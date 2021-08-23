@@ -1,7 +1,13 @@
 const $bg = document.getElementById("bg");
 const $maskNum = document.getElementById("maskNum");
+const $opensea = document.getElementById("opensea");
 
 $maskNum.value = seed;
+// we can't directly link unless we build up an index between the mask number in the name and the "collection id" opensea uses for their direct urls... so we build a search query
+$opensea.href =
+  "https://opensea.io/assets/generativemasks?search[query]=%22%23" +
+  seed +
+  "%20%22&search[sortAscending]=true&search[sortBy]=CREATED_DATE";
 
 function updateFormVars() {
   drawBg = !$bg.checked;
