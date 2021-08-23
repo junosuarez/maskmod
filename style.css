@@ -1,0 +1,39 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display: block;
+  max-width: 1600px !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/*//*/
+
+body {
+  background: rgb(199, 36, 38);
+}
+.p5Canvas {
+  margin: auto;
+  animation-duration: 3s;
+  animation-name: colorshift;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+/*
+@keyframes colorshift {
+  0% {
+    opacity: 1;
+    filter: hue-rotate(0deg) invert(0);
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+    filter: hue-rotate(0deg) invert(100%);
+  }
+} */
