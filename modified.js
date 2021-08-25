@@ -12,7 +12,7 @@ $opensea.href =
 
 function updateFormVars() {
   drawBg = !$bg.checked;
-  wood = $material.value === "wood";
+  material = $material.value;
 }
 
 function changePalette() {

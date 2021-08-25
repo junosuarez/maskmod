@@ -13,7 +13,7 @@ let texture;
 let f = 0;
 let bg;
 let drawBg = false;
-let wood = false;
+let material = "classic";
 
 function setup() {
   createCanvas(1600, 1600);
@@ -70,7 +70,14 @@ function draw() {
     shuffleRnd(url);
   }
 
-  palette = shuffle(createPalette(wood ? woodPalette : random(url)), true);
+  palette = shuffle(
+    createPalette(material === "wood" ? woodPalette : random(url)),
+    true
+  );
+  if (material === "black n white") {
+    palette[0] =
+      Math.random() > 0.5 ? color(0, 0, 0, 255) : color(255, 255, 255, 255);
+  }
 
   randomSeed(current);
   noiseSeed(current);
@@ -121,8 +128,13 @@ function draw() {
   // drawingContext.shadowBlur = max(width, height) / 20;
   // drawingContext.shadowOffsetY = max(width, height) / 40;
 
-  if (wood) {
-    textureMask(g);
+  switch (material) {
+    case "wood":
+      textureMask(g);
+      break;
+    case "black n white":
+      bwMask(g);
+      break;
   }
 
   image(g, 0, 0);
@@ -185,6 +197,32 @@ function textureMask(g) {
           woodgrain(mArr[2], txA),
           255
         );
+      }
+    }
+  }
+  g.updatePixels();
+}
+
+function bwMask(g) {
+  g.loadPixels();
+  window.g = g;
+  const tArr = [];
+  const mArr = [];
+  for (let j = 0; j < g.height; j++) {
+    var rowOn = Math.random() > 0.8;
+    for (let i = 0; i < g.width; i++) {
+      readColor(g, i, j, mArr);
+      let alpha = mArr[3];
+      if (alpha > 0) {
+        readColor(texture, i, j, tArr);
+
+        var brightness = (mArr[0] + mArr[1] + mArr[1] + mArr[2]) / 4;
+
+        if (rowOn && Math.random() > 0.5) {
+          brightness += Math.random() > 0.5 ? 32 : -32;
+        }
+
+        writeColor(g, i, j, brightness, brightness, brightness, 255);
       }
     }
   }
