@@ -13,15 +13,16 @@ let texture;
 let f = 0;
 let bg;
 let drawBg = false;
+let wood = false;
 
 function setup() {
   createCanvas(1600, 1600);
   pixelDensity(1);
-  colorMode(HSB, 360, 100, 100, 100);
+  colorMode(RGB, 360, 100, 100, 100);
   angleMode(DEGREES);
 
   texture = createGraphics(width, height);
-  texture.colorMode(HSB, 360, 100, 100, 100);
+  texture.colorMode(RGB, 360, 100, 100, 100);
   texture.angleMode(DEGREES);
 
   texture.stroke(0, 0, 0, 1);
@@ -69,7 +70,7 @@ function draw() {
     shuffleRnd(url);
   }
 
-  palette = shuffle(createPalette(random(url)), true);
+  palette = shuffle(createPalette(wood ? woodPalette : random(url)), true);
 
   randomSeed(current);
   noiseSeed(current);
@@ -120,12 +121,74 @@ function draw() {
   // drawingContext.shadowBlur = max(width, height) / 20;
   // drawingContext.shadowOffsetY = max(width, height) / 40;
 
+  if (wood) {
+    textureMask(g);
+  }
+
   image(g, 0, 0);
   pop();
+
   // image(texture, 0, 0);
 
   // frameRate(10);
   noLoop();
+}
+
+// helper for writing color to array
+function writeColor(image, x, y, red, green, blue, alpha) {
+  let index = (x + y * width) * 4;
+  image.pixels[index] = red;
+  image.pixels[index + 1] = green;
+  image.pixels[index + 2] = blue;
+  image.pixels[index + 3] = alpha;
+}
+function readColor(image, x, y, arr) {
+  let index = (x + y * width) * 4;
+
+  arr[0] = image.pixels[index];
+  arr[1] = image.pixels[index + 1];
+  arr[2] = image.pixels[index + 2];
+  arr[3] = image.pixels[index + 3];
+  return arr;
+}
+
+function multiplyColor(a, b) {
+  a[0] = (a[0] / 255) * (b[0] / 255) * 255;
+  a[1] = (a[1] / 255) * (b[1] / 255) * 255;
+  a[2] = (a[2] / 255) * (b[2] / 255) * 255;
+}
+
+function woodgrain(base, grain) {
+  var weight = Math.random() + 0.5;
+  return base - weight * grain;
+}
+
+function textureMask(g) {
+  g.loadPixels();
+  texture.loadPixels();
+  window.tx = texture;
+  const tArr = [];
+  const mArr = [];
+  for (let j = 0; j < g.height; j++) {
+    for (let i = 0; i < g.width; i++) {
+      readColor(g, i, j, mArr);
+      let alpha = mArr[3];
+      if (alpha > 0) {
+        readColor(texture, i, j, tArr);
+        const txA = tArr[3];
+        writeColor(
+          g,
+          i,
+          j,
+          woodgrain(mArr[0], txA),
+          woodgrain(mArr[1], txA),
+          woodgrain(mArr[2], txA),
+          255
+        );
+      }
+    }
+  }
+  g.updatePixels();
 }
 
 function detectCenter(area) {
@@ -446,6 +509,8 @@ function drawShape(cx, cy, r, nPhase) {
 
   pop();
 }
+
+let woodPalette = "6b3e2e-c38452-e3c099-a1785c-ccb494";
 
 let url = [
   "202c39-283845-b8b08d-f2d492-f29559",

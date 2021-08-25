@@ -1,4 +1,5 @@
-const $bg = document.getElementById("bg");
+const $bg = document.getElementById("bgInput");
+const $wood = document.getElementById("woodInput");
 const $maskNum = document.getElementById("maskNum");
 const $opensea = document.getElementById("opensea");
 
@@ -11,6 +12,7 @@ $opensea.href =
 
 function updateFormVars() {
   drawBg = !$bg.checked;
+  wood = $wood.checked;
 }
 
 function changePalette() {
